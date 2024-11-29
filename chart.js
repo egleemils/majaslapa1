@@ -16,7 +16,7 @@ function fetchCSVData() {
         makeBarChart(months, temperatures);
         }
     };
-    xhttp.open("GET", "WeatherData-DigitalTransformationII.csv", true);
+    xhttp.open("GET", "weatherData.csv", true);
     xhttp.send();
     }
     
