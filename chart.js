@@ -10,8 +10,8 @@ function fetchWeatherData() {
             for (var i = 1; i < rows.length; i++) {
                 var cols = rows[i].split(',');
                 if (cols.length >= 2) {
-                    months.push(cols[0]); // Pieņemot, ka pirmā kolonna ir mēneši
-                    temperatures.push(parseFloat(cols[1])); // Pieņemot, ka otrā kolonna ir temperatūras
+                    months.push(cols[0]);
+                    temperatures.push(parseFloat(cols[1]));
                 }
             }
 
@@ -28,18 +28,18 @@ function fetchSalaryData() {
         if (this.readyState == 4 && this.status == 200) {
             var data = this.responseText;
             var rows = data.split('\n');
-            var years = [];
-            var salaries = [];
+            var dates = [];
+            var wages = [];
 
-            for (var i = 1; i < rows.length; i++) {
+            for (var i = 2; i < rows.length; i++) {
                 var cols = rows[i].split(',');
                 if (cols.length >= 2) {
-                    years.push(cols[0]); // Pieņemot, ka pirmā kolonna ir gadi
-                    salaries.push(parseFloat(cols[1])); // Pieņemot, ka otrā kolonna ir algas
+                    dates.push(cols[0]);
+                    wages.push(parseFloat(cols[1]));
                 }
             }
 
-            makeSalaryChart(years, salaries);
+            makeSalaryChart(dates, wages);
         }
     };
     xhttp.open("GET", "DSM010_20241202-150923.csv", true);
@@ -68,15 +68,15 @@ function makeBarChart(months, temperatures) {
     });
 }
 
-function makeSalaryChart(years, salaries) {
+function makeSalaryChart(dates, wages) {
     var ctx2 = document.getElementById('chart2').getContext('2d');
     var chart2 = new Chart(ctx2, {
         type: 'line',
         data: {
-            labels: years,
+            labels: dates,
             datasets: [{
                 label: 'Minimālās Mēnešalgas Pieaugums (€)',
-                data: salaries,
+                data: wages,
                 borderColor: '#FF6384',
                 backgroundColor: 'rgba(255, 99, 132, 0.2)',
                 tension: 0.1
@@ -90,4 +90,13 @@ function makeSalaryChart(years, salaries) {
             },
             scales: {
                 x: { title: { display: true, text: 'Gads' } },
-                y: {
+                y: { title: { display: true, text: 'Alga (€)' } }
+            }
+        }
+    });
+}
+
+window.onload = function() {
+    fetchWeatherData();
+    fetchSalaryData();
+};
