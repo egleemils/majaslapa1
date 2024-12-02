@@ -47,26 +47,26 @@ function fetchSalaryData() {
 }
 
 function makeBarChart(months, temperatures) {
-    var ctx1 = document.getElementById('chart1').getContext('2d');
-    var chart1 = new Chart(ctx1, {
+        var ctx1 = document.getElementById('chart1').getContext('2d');
+        var chart1 = new Chart(ctx1, {
         type: 'bar',
-        data: {
-            labels: months,
-            datasets: [{
-                label: 'Vidējā Temperatūra (°C)',
-                data: temperatures,
-                backgroundColor: '#36A2EB'
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: { position: 'top' },
-                title: { display: true, text: 'Vidējā Temperatūra gada sākumā' }
+            data: {
+        labels: months,
+        datasets: [{
+        label: 'Vidējā Temperatūra (°C)',
+        data: temperatures,
+        backgroundColor: '#36A2EB'
+        }]
+    },
+    options: {
+        responsive: true,
+    plugins: {
+    legend: { position: 'top' },
+    title: { display: true, text: 'Vidējā Temperatūra gada sākumā' }
             }
         }
-    });
-}
+        });
+    }
 
 function makeSalaryChart(dates, wages) {
     var ctx2 = document.getElementById('chart2').getContext('2d');
