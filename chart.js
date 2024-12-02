@@ -97,6 +97,6 @@ function makeSalaryChart(dates, wages) {
 }
 
 window.onload = function() {
-    fetchweatherData();
+    fetchWeatherData();
     fetchSalaryData();
 };
