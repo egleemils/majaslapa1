@@ -89,7 +89,7 @@ function makeSalaryChart(dates, wages) {
                 title: { display: true, text: 'Minimālās Mēnešalgas Pieaugums' }
             },
             scales: {
-                x: { title: { display: true, text: 'Gads' } },
+                x: { title: { display: true, text: 'Izmaiņu datums' } },
                 y: { title: { display: true, text: 'Alga (€)' } }
             }
         }
