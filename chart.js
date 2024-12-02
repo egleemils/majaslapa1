@@ -1,84 +1,58 @@
 function fetchCSVData() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-        var data = this.responseText;
-        var rows = data.split('\n');
-        var months = [];
-        var temperatures = [];
-        for (var i = 1; i < rows.length; i++) {
-          var cols = rows[i].split(',');
-        if (cols.length >= 2) {
-        months.push(cols[0]);
-        temperatures.push(parseFloat(cols[1]));
-        }
-    }
-        makeBarChart(months, temperatures);
-        }
-    };
-    xhttp.open("GET", "weatherData.csv", true);
-    xhttp.send();
-    }
-    
-    function makeBarChart(months, temperatures) {
-        var ctx1 = document.getElementById('chart1').getContext('2d');
-        var chart1 = new Chart(ctx1, {
-        type: 'bar',
-            data: {
-        labels: months,
-        datasets: [{
-        label: 'Vidējā Temperatūra (°C)',
-        data: temperatures,
-        backgroundColor: '#36A2EB'
-        }]
-    },
-    options: {
-        responsive: true,
-    plugins: {
-    legend: { position: 'top' },
-    title: { display: true, text: 'Vidējā Temperatūra gada sākumā' }
-            }
-        }
-        });
-    }
-    
-function fetchCSVData() {
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             var data = this.responseText;
             var rows = data.split('\n');
-            var dates = [];
-            var wages = [];
-            for (var i = 3; i < rows.length; i++) {
+            var months = [];
+            var temperatures = [];
+            for (var i = 1; i < rows.length; i++) {
                 var cols = rows[i].split(',');
                 if (cols.length >= 2) {
-                    var date = cols[0];
-                    var wage = parseFloat(cols[1]);
-                    if (!isNaN(wage)) {
-                        dates.push(date);
-                        wages.push(wage);
-                    }
+                    months.push(cols[0]);
+                    temperatures.push(parseFloat(cols[1]));
                 }
             }
-            makeLineChart(dates, wages);
+            makeBarChart(months, temperatures);
         }
     };
     xhttp.open("GET", "DSM010_20241202-150923.csv", true);
     xhttp.send();
 }
 
-function makeLineChart(dates, wages) {
-    var ctx = document.getElementById('chart2').getContext('2d');
-    var chart = new Chart(ctx, {
+function makeBarChart(months, temperatures) {
+    var ctx1 = document.getElementById('chart1').getContext('2d');
+    var chart1 = new Chart(ctx1, {
+        type: 'bar',
+        data: {
+            labels: months,
+            datasets: [{
+                label: 'Vidējā Temperatūra (°C)',
+                data: temperatures,
+                backgroundColor: '#36A2EB'
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'top' },
+                title: { display: true, text: 'Vidējā Temperatūra gada sākumā' }
+            }
+        }
+    });
+}
+
+function createExperienceChart() {
+    var ctx2 = document.getElementById('chart2').getContext('2d');
+    var chart2 = new Chart(ctx2, {
         type: 'line',
         data: {
-            labels: dates,
+            labels: ['2020', '2021', '2022', '2023', '2024'],
             datasets: [{
-                label: 'Minimālā mēneša alga (eiro)',
-                data: wages,
-                borderColor: '#36A2EB',
-                fill: false,
+                label: 'Minimālās Mēnešalgas Pieaugums (€)',
+                data: [430, 500, 550, 620, 700],
+                borderColor: '#FF6384',
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
                 tension: 0.1
             }]
         },
@@ -86,16 +60,17 @@ function makeLineChart(dates, wages) {
             responsive: true,
             plugins: {
                 legend: { position: 'top' },
-                title: { display: true, text: 'Minimālās mēneša algas izmaiņas' }
+                title: { display: true, text: 'Minimālās Mēnešalgas Pieaugums (2020–2024)' }
             },
             scales: {
-                x: {
-                    title: { display: true, text: 'Izmaiņu datums' }
-                },
-                y: {
-                    title: { display: true, text: 'Alga (eiro)' }
-                }
+                x: { title: { display: true, text: 'Gads' } },
+                y: { title: { display: true, text: 'Alga (€)' } }
             }
         }
     });
 }
+
+window.onload = function() {
+    fetchCSVData();
+    createExperienceChart();
+};
