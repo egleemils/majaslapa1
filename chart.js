@@ -18,7 +18,7 @@ function fetchWeatherData() {
             makeBarChart(months, temperatures);
         }
     };
-    xhttp.open("GET", "WeatherData.csv", true);
+    xhttp.open("GET", "weatherData.csv", true);
     xhttp.send();
 }
 
@@ -97,6 +97,6 @@ function makeSalaryChart(dates, wages) {
 }
 
 window.onload = function() {
-    fetchWeatherData();
+    fetchweatherData();
     fetchSalaryData();
 };
