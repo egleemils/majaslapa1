@@ -69,7 +69,7 @@ function fetchCSVData() {
 }
 
 function makeLineChart(dates, wages) {
-    var ctx = document.getElementById('chart').getContext('2d');
+    var ctx = document.getElementById('chart2').getContext('2d');
     var chart = new Chart(ctx, {
         type: 'line',
         data: {
