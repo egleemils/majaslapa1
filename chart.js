@@ -1,4 +1,4 @@
-function fetchCSVData() {
+function fetchWeatherData() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -6,8 +6,6 @@ function fetchCSVData() {
             var rows = data.split('\n');
             var months = [];
             var temperatures = [];
-            var years = [];
-            var salaries = [];
 
             for (var i = 1; i < rows.length; i++) {
                 var cols = rows[i].split(',');
@@ -15,13 +13,32 @@ function fetchCSVData() {
                     months.push(cols[0]); // Pieņemot, ka pirmā kolonna ir mēneši
                     temperatures.push(parseFloat(cols[1])); // Pieņemot, ka otrā kolonna ir temperatūras
                 }
-                if (cols.length >= 4) {
-                    years.push(cols[2]); // Pieņemot, ka trešā kolonna ir gadi
-                    salaries.push(parseFloat(cols[3])); // Pieņemot, ka ceturtā kolonna ir algas
-                }
             }
 
             makeBarChart(months, temperatures);
+        }
+    };
+    xhttp.open("GET", "WeatherData.csv", true);
+    xhttp.send();
+}
+
+function fetchSalaryData() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var data = this.responseText;
+            var rows = data.split('\n');
+            var years = [];
+            var salaries = [];
+
+            for (var i = 1; i < rows.length; i++) {
+                var cols = rows[i].split(',');
+                if (cols.length >= 2) {
+                    years.push(cols[0]); // Pieņemot, ka pirmā kolonna ir gadi
+                    salaries.push(parseFloat(cols[1])); // Pieņemot, ka otrā kolonna ir algas
+                }
+            }
+
             makeSalaryChart(years, salaries);
         }
     };
@@ -73,12 +90,4 @@ function makeSalaryChart(years, salaries) {
             },
             scales: {
                 x: { title: { display: true, text: 'Gads' } },
-                y: { title: { display: true, text: 'Alga (€)' } }
-            }
-        }
-    });
-}
-
-window.onload = function() {
-    fetchCSVData();
-};
+                y: {
